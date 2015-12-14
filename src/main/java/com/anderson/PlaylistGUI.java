@@ -7,29 +7,20 @@ import java.awt.event.ActionListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
-/**
- * Created by Jack on 12/7/2015.
- */
+/***********Main window GUI**************/
+
+/*****COMPONENTS************/
 public class PlaylistGUI extends JFrame{
     private JPanel rootPanel;
     private JTextField playlistCountBox;
     private JTextField artistBox;
-
     private JButton submitButton;
     private JButton clearFieldsButton;
     private JLabel errorLabel;
     private JButton searchForPlaylistButton;
 
     private Dimension d = new Dimension(300, 350);
-
-
-
-
-
-
-    /***************/
 
     private String userArtist;
     private int userSongCount;
