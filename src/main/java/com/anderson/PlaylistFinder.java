@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * Created by Jack on 12/7/2015.
  */
 
+
+
 public class PlaylistFinder {
     private int playListCount;
     private String artist;
