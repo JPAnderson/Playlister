@@ -15,5 +15,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.jen-api:jen-api:4.x.p" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1" level="project" />
+    <orderEntry type="library" name="jEN" level="project" />
   </component>
 </module>

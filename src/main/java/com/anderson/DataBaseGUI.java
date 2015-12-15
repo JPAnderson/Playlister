@@ -1,4 +1,10 @@
 package com.anderson;
+/***
+ * This GUI class was hardcoded. It is the form that displays when the user picks an artist and
+ * number of songs. It displays a JList containing all the songs, and allows you to save the
+ * playlist in the database
+ *
+ */
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,18 +14,18 @@ import java.util.*;
 
 public class DataBaseGUI extends JFrame {
     private JPanel rootPanel = new JPanel();
-    private Dimension d = new Dimension(350, 350);
-    private JLabel title = new JLabel();
-    private JList<String> songJList;
-    private JButton quit = new JButton("Close");
-    private JButton save = new JButton("Save list");
-    private JButton regen = new JButton("Regenerate");
+    private Dimension d = new Dimension(400, 350);
     private JLabel saveLabel = new JLabel();
-
-    private JTextField saveNameTextBox = new JTextField();
+    private JLabel title = new JLabel();
+    private JLabel error = new JLabel();
+    private JButton save = new JButton("Save list");
     private JButton confirmSave = new JButton("Save!");
+    private JScrollPane JSP = new JScrollPane();
+    private JList<String> songJList;
+    private JTextField saveNameTextBox = new JTextField();
 
     private Database db = new Database();
+
 
 
     protected DataBaseGUI(ArrayList<String> songList){
@@ -36,10 +42,9 @@ public class DataBaseGUI extends JFrame {
 
         title.setText("Playlist Result:");
         rootPanel.add(title, BorderLayout.PAGE_START);
-        rootPanel.add(songJList, BorderLayout.CENTER);
-        rootPanel.add(quit, BorderLayout.LINE_END);
+        rootPanel.add(JSP, BorderLayout.CENTER);
+        JSP.setViewportView(songJList);
         rootPanel.add(save, BorderLayout.LINE_END);
-        rootPanel.add(regen, BorderLayout.LINE_END);
         rootPanel.add(saveLabel, BorderLayout.SOUTH);
         rootPanel.add(saveNameTextBox, BorderLayout.SOUTH);
         rootPanel.add(confirmSave, BorderLayout.SOUTH);
@@ -60,8 +65,16 @@ public class DataBaseGUI extends JFrame {
 
         confirmSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                rootPanel.add(error, BorderLayout.PAGE_END);
                 String toDataBase = saveNameTextBox.getText();
-                db.createAndFillTable(toDataBase, songArray);
+                String er = db.createAndFillTable(toDataBase, songArray);
+                if(er != null){
+
+                    error.setText(er);
+                } else {
+                    error.setText("Playlist saved as " + toDataBase + ". Safe to close window");
+                }
+
             }
         });
     }

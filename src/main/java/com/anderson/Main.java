@@ -6,17 +6,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
+    /***
+     *  Playlister program:
+     *  This program takes a user artist and playlist amount to call the API echonest to return back
+     *  a playlist of random songs that are similar to the artist entered. This playlist can then be
+     *  saved in a database called songDB. This database can then be queried to retrieve previously saved
+     *  playlists.
+     */
 
 
     public static void main(String[] args) {
 
-        //Database db = new Database();
-        //Setting the look and feel to Windows
-        //must be called before instantiating the GUI
 
+        //Setting the look and feel to Windows.
+        //Must be called before instantiating the GUI
+
+        /***Set windows look and feel***/
         try {
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
+
         } catch (UnsupportedLookAndFeelException e) {
             System.out.println("Look and feel not supported!");
             e.printStackTrace();
@@ -31,8 +40,8 @@ public class Main {
             e.printStackTrace();
         }
 
+        //Create new playlister main window
         PlaylistGUI GUI = new PlaylistGUI();
-
 
     }
 }

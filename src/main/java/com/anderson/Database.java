@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by Jack on 12/14/2015.
+ * Database does all the work for getting from and sending to the database.
  */
+
 public class Database {
     static final String DATABASE_URL = "jdbc:mysql://localhost:3306/";
     private static String DB_NAME = "songDB";
-    static final String USER = "root";
-    static final String PASSWORD = "team13";
+    static final String USER = "root"; //TODO replace with your credentials
+    static final String PASSWORD = "team13"; //TODO replace with your credentials
     static Statement statement = null;
     static Connection connection = null;
     ResultSet resultSet = null;
@@ -26,15 +27,9 @@ public class Database {
                 System.out.println("Drivers not found. Exit");
                 System.exit(-1);
             }
-//            String createDatabase = "CREATE DATABASE IF NOT EXISTS " + DB_NAME;
-//            statement.executeUpdate(createDatabase);
 
             connection = DriverManager.getConnection(DATABASE_URL + DB_NAME, USER, PASSWORD);
             statement = connection.createStatement();
-
-            // create database
-            //   String createDatabase = "CREATE DATABASE IF NOT EXISTS " + DB_NAME;
-            //   statement.executeUpdate(createDatabase);
 
             System.out.println("Database created/connected");
 
@@ -45,8 +40,11 @@ public class Database {
     }
 
 
-    public void createAndFillTable(String tableName, String[] songArray){
+    /***CREATE PLAYLIST AND POPULATE IT**/
+    public String createAndFillTable(String tableName, String[] songArray){
 
+        String errorString = "Alphanumeric input only please. No spaces"; //Send this if something goes wrong
+        String clearString = null; //Send this if nothing goes wrong
         try {
             ArrayList<String> songArrayList = new ArrayList<String>(Arrays.asList(songArray));
             String tableUpdate;
@@ -65,12 +63,14 @@ public class Database {
                 System.out.println(song);
                 System.out.println(song + " inserted into " + tableName);
             }
+            return clearString;
 
         } catch (Exception e){
-            e.printStackTrace();
+            return errorString;
         }
     }
 
+    /***FIND PLAYLIST AND SEND IT BACK AS AN ARRAY***/
     public String[] retrievePlaylist(String plName){
         this.tableName = plName;
         ArrayList<String> retrievePL = new ArrayList<String>();

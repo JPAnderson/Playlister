@@ -17,15 +17,16 @@ public class PlaylistGUI extends JFrame{
     private JTextField artistBox;
     private JButton submitButton;
     private JButton clearFieldsButton;
-    private JLabel errorLabel;
     private JButton searchForPlaylistButton;
-
+    private JLabel errorLabel;
+    private JLabel errorLabel2;
     private Dimension d = new Dimension(300, 350);
 
     private String userArtist;
     private int userSongCount;
     private ArrayList<String> errorArrayList;
 
+    /***CONSTRUCTOR***/
     protected PlaylistGUI(){
 
         setContentPane(rootPanel);
@@ -34,46 +35,48 @@ public class PlaylistGUI extends JFrame{
         pack();
         setVisible(true);
 
-
+        /***WHEN SUBMIT IS CLICKED***/
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                userArtist = artistBox.getText();
-                userSongCount = Integer.parseInt(playlistCountBox.getText());
-
                 try {
-                    PlaylistFinder list = new PlaylistFinder(userSongCount, userArtist);
-                    errorArrayList = list.createPlayList();
+                    userArtist = artistBox.getText(); //Get the artist name from artistTextBox
+                    userSongCount = Integer.parseInt(playlistCountBox.getText()); //Get the song count from playlistCountBox
 
-                    if(errorArrayList.get(0).equals("ERROR")){
-                        errorLabel.setText(errorArrayList.get(1));
+                    PlaylistFinder list = new PlaylistFinder(userSongCount, userArtist); //Create new playlist finder.
+                    errorArrayList = list.createPlayList(); //Call createPlaylist on finder object. Will return an arraylist of songs
+
+                    if(errorArrayList.get(0).equals("ERROR")){ //If the first element in the arraylist == "ERROR"
+
+                        errorLabel.setText(errorArrayList.get(1)); //Set the error labels
+                        errorLabel2.setText(errorArrayList.get(2));
+
+                    } else {
+                        DataBaseGUI dbg = new DataBaseGUI(errorArrayList); //Everything checks out. Create the next form and send it the list of songs.
                     }
+
                 }catch(IOException ioe){
-                    System.out.println("Something probably stupid went wrong");
+                    System.out.println("Something went wrong"); //Probably won't reach here
+                }catch(NumberFormatException nfe){
+                    errorLabel2.setText("All fields required");//....probably
                 }
-
-               DataBaseGUI dbg = new DataBaseGUI(errorArrayList);
-
-
             }
         });
 
-
+        /***WHEN SEARCH LISTS IS CLICKED***/
         searchForPlaylistButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PlaylistsViewGUI pGUI = new PlaylistsViewGUI();
+                PlaylistsViewGUI pGUI = new PlaylistsViewGUI(); //Show the find playlists form
             }
         });
 
+        //Clear the textfields if clearFields is clicked
         clearFieldsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playlistCountBox.setText("");
                 artistBox.setText("");
             }
         });
-
-
     }
-
 }
 
-//minneapolis edu simpleCardLayout
+
